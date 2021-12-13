@@ -1,10 +1,27 @@
 // Assignment code here
+var numberArr = ['1','2','3','4','5','6','7','8','9','0']
+var lowerArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+var upperArr = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+var specialArr = [ "!", "#", "$", "%", "&","(",")", "*", "+","-",".", "/", ":", ";","<","=", ">" , "?", "@", "~"]
 function initPrompts() {
-  var length = prompt("How long would you like your password to be?");
+  var length =  parseInt(prompt("How long would you like your password to be?"));
+  if (isNaN(length) ){
+    alert('Choose A valid Number')
+    return null
+  }
+  if(length > 128){
+    alert('Choose A valid Number')
+    return null
+  }
+  if(  length < 8 ){
+    alert('Choose A valid Number')
+    return null
+  }
   var lowerCase = confirm("Would you like to use lowercase letters?");
   var upperCase = confirm("Would you like to use uppercase letters?");
   var numbers = confirm("Would you like to use numbers?");
   var specialChar = confirm("Would you like to use special characters?");
+
   console.log(length);
   
   var results =  {
@@ -12,14 +29,41 @@ function initPrompts() {
     resLower : lowerCase,
     resUpper : upperCase,
     resNum : numbers,
-    resSpec : specialChar,
+    resSpec : specialChar
   }
   return results;
 }
 
+function randomChar(arr) {
+  var randIndex = Math.floor(Math.random() * arr.length);
+  var randChar = arr[randIndex];
+
+  return randChar;
+}
+
 function generatePassword() {
   var result = initPrompts();
-  console.log(result);
+  var combined = []
+  var final = []
+  if (result.resNum){
+  combined = combined.concat(numberArr)
+
+  }
+  if (result.resLower){
+  combined = combined.concat(lowerArr)
+  } 
+  if (result.resSpec) {
+  combined = combined.concat(specialArr)
+  }
+  if (result.resUpper) {
+  combined = combined.concat(upperArr)
+  }
+  for (let i = 0; i < result.reslength; i++) {
+    const randomCharacter = randomChar(combined);
+    final.push(randomCharacter)
+  }
+  console.log(combined)
+  return final.join('')
 }
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
